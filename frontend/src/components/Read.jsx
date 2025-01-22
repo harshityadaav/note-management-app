@@ -50,47 +50,57 @@ function Read() {
   };
 
   return (
-    <div className="container my-2">
+    <div className="container my-4">
       {error && (
         <div className="alert alert-danger" role="alert">
           {error}
         </div>
       )}
-
-      <h2 className="text-center">Notes List</h2>
-
-      <table className="table">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Title</th>
-            <th scope="col">Description</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((note, index) => (
-            <tr key={note._id}>
-              <th scope="row">{index + 1}</th>
-              <td>{note.title}</td>
-              <td>{note.description}</td>
-              <td>
-                <Link to={`/update/${note._id}`} className="card-link m-2">
-                  Edit
-                </Link>
-                <button
-                  className="btn btn-link text-danger m-2"
-                  onClick={() => handleDelete(note._id)}
-                >
-                  Delete
-                </button>
-              </td>
+  
+      <h2 className="text-center mb-4">Notes List</h2>
+  
+      <div className="table-responsive">
+        <table className="table table-bordered table-hover">
+          <thead className="table-dark text-center">
+            <tr>
+              <th scope="col" className="w-10">#</th>
+              <th scope="col" className="w-30">Title</th>
+              <th scope="col" className="w-40">Description</th>
+              <th scope="col" className="w-20">Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {data.map((note, index) => (
+              <tr key={note._id}>
+                <th scope="row" className="text-center align-middle">
+                  {index + 1}
+                </th>
+                <td className="align-middle text-center">{note.title}</td>
+                <td className="align-middle text-wrap">
+                  <div style={{ whiteSpace: "pre-wrap" }}>{note.description}</div>
+                </td>
+                <td className="align-middle text-center">
+                  <Link
+                    to={`/update/${note._id}`}
+                    className="btn btn-sm btn-primary mx-1"
+                  >
+                    Edit
+                  </Link>
+                  <button
+                    className="btn btn-sm btn-danger mx-1"
+                    onClick={() => handleDelete(note._id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
-  );
+  );  
+  
 }
 
 export default Read;

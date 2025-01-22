@@ -59,8 +59,11 @@ function Update() {
   };
 
   return (
-    <div className="container my-2">
-      <h2>Edit Note</h2>
+    <div
+    className="d-flex justify-content-center align-items-center vh-100 bg-light"
+  >
+    <div className="container p-4 bg-white rounded shadow-sm" style={{ maxWidth: "500px" }}>
+      <h2 className="text-center mb-4">Edit Note</h2>
 
       <form onSubmit={handleEdit}>
         <div className="mb-3">
@@ -69,6 +72,7 @@ function Update() {
             name="title"
             type="text"
             className="form-control"
+            placeholder="Enter note title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
@@ -78,16 +82,19 @@ function Update() {
           <textarea
             name="description"
             className="form-control"
+            rows="5"
+            placeholder="Enter note description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
 
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary w-100">
           Submit
         </button>
       </form>
     </div>
+  </div>
   );
 }
 

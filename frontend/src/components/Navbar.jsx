@@ -52,7 +52,7 @@ export default function Navbar() {
     <nav style={navbarStyle}>
       <h3 style={logoStyle}>
         <Link to="/" style={logoStyle}>
-          MERN
+          Note Management
         </Link>
       </h3>
       <ul style={navLinksStyle}>

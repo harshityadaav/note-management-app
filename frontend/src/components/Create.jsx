@@ -35,36 +35,44 @@ function Create() {
   };
 
   return (
-    <div className="container my-2">
-      <h2>Add a New Note</h2>
-
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label className="form-label">Title</label>
-          <input
-            name="title"
-            type="text"
-            className="form-control"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Description</label>
-          <textarea
-            name="description"
-            className="form-control"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
-
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
-      </form>
+    <div
+      className="d-flex justify-content-center align-items-center vh-100 bg-light"
+    >
+      <div className="container p-4 bg-white rounded shadow-sm" style={{ maxWidth: "500px" }}>
+        <h2 className="text-center mb-4">Add a New Note</h2>
+  
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label className="form-label">Title</label>
+            <input
+              name="title"
+              type="text"
+              className="form-control"
+              placeholder="Enter note title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Description</label>
+            <textarea
+              name="description"
+              className="form-control"
+              rows="5"
+              placeholder="Enter note description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+  
+          <button type="submit" className="btn btn-primary w-100">
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   );
+  
 }
 
 export default Create;
