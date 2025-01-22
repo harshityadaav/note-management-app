@@ -1,4 +1,3 @@
-// userController.js
 const Note = require("../models/note.model");
 
 /**
@@ -6,23 +5,27 @@ const Note = require("../models/note.model");
  */
 const createNote = async (req, res) => {
   const { title, description } = req.body;
+  const userId = req.user.id; 
 
   try {
-    const noteAdded = await Note.create({ title, description });
+    const noteAdded = await Note.create({ title, description, userId });
     res.status(201).json({ message: "Note created successfully", data: noteAdded });
   } catch (error) {
-    console.error("Error creating user:", error);
+    console.error("Error creating note:", error);
     res.status(400).json({ error: error.message });
   }
 };
 
 /**
- * Get all notes
+ * Get all notes for the logged-in user
  */
 const getAllNotes = async (req, res) => {
   try {
-    const allNotes = await Note.find();
-    res.status(200).json({ data: allNotes });
+    const userId = req.user.id; 
+
+    const userNotes = await Note.find({ userId }); 
+
+    res.status(200).json({ data: userNotes });
   } catch (error) {
     console.error("Error fetching note list:", error);
     res.status(400).json({ error: error.message });
@@ -78,7 +81,7 @@ const updateNoteById = async (req, res) => {
     }
     res.status(200).json({ message: "Note updated successfully", data: updatedData });
   } catch (error) {
-    console.error("Error updating Note:", error);
+    console.error("Error updating note:", error);
     res.status(500).json({ error: error.message });
   }
 };
