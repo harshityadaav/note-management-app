@@ -1,16 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import axios from "axios";
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const [userRole, setUserRole] = useState(null);
 
   // Check if the user is logged in by checking for a token in cookies
   const isLoggedIn = Cookies.get("token") !== undefined;
 
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      try {
+        if (isLoggedIn) {
+          const response = await axios.get("http://localhost:5000/api/user/profile", {
+            headers: {
+              Authorization: `Bearer ${Cookies.get("token")}`, 
+            },
+          });
+          setUserRole(response.data.role); 
+        }
+      } catch (error) {
+        console.error("Error fetching user role:", error);
+      }
+    };
+
+    fetchUserRole();
+  }, [isLoggedIn]);
+
   const handleLogout = () => {
-    Cookies.remove("token", { path: "/" }); // Clear the token
-    navigate("/signin"); // Redirect to signin
+    Cookies.remove("token", { path: "/" }); 
+    navigate("/signin"); 
   };
 
   const navbarStyle = {
@@ -52,27 +73,44 @@ export default function Navbar() {
     <nav style={navbarStyle}>
       <h3 style={logoStyle}>
         <Link to="/" style={logoStyle}>
-          Note Management
+          Notes Management
         </Link>
       </h3>
       <ul style={navLinksStyle}>
         {isLoggedIn ? (
           <>
-            <li>
-              <Link to="/create" style={navLinkStyle}>
-                Create Note
-              </Link>
-            </li>
-            <li>
-              <Link to="/noteslist" style={{ ...navLinkStyle, ...activeLinkStyle }}>
-                All Notes
-              </Link>
-            </li>
-            <li>
-              <button onClick={handleLogout} style={navLinkStyle}>
-                Logout
-              </button>
-            </li>
+            {userRole === "admin" ? (
+              <>
+                <li>
+                  <Link to="/admin-dashboard" style={{ ...navLinkStyle, ...activeLinkStyle }}>
+                    Admin Dashboard
+                  </Link>
+                </li>
+                <li>
+                  <button onClick={handleLogout} style={navLinkStyle}>
+                    Logout
+                  </button>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link to="/create" style={navLinkStyle}>
+                    Create Note
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/noteslist" style={{ ...navLinkStyle, ...activeLinkStyle }}>
+                    All Notes
+                  </Link>
+                </li>
+                <li>
+                  <button onClick={handleLogout} style={navLinkStyle}>
+                    Logout
+                  </button>
+                </li>
+              </>
+            )}
           </>
         ) : (
           <li>

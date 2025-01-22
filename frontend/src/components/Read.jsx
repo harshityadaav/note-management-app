@@ -40,10 +40,8 @@ function Read() {
         },
       });
       setError("Delete Successfully");
-      setTimeout(() => {
         setError("");
-        getData(); // Refresh data after deletion
-      }, 2000);
+        getData(); 
     } catch (err) {
       setError(err.response?.data?.error || "Something went wrong");
     }
@@ -51,11 +49,6 @@ function Read() {
 
   return (
     <div className="container my-4">
-      {error && (
-        <div className="alert alert-danger" role="alert">
-          {error}
-        </div>
-      )}
   
       <h2 className="text-center mb-4">Notes List</h2>
   

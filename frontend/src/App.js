@@ -6,12 +6,21 @@ import Read from "./components/Read";
 import Home from "./components/Home";
 import Signup from "./components/Signup";
 import Signin from "./components/Signin";
+import AdminDashboard from "./components/AdminDashboard"; 
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 function PrivateRoute({ children }) {
   const token = Cookies.get("token");
   return token ? children : <Navigate to="/signin" />;
+}
+
+function AdminRoute({ children }) {
+  const token = Cookies.get("token");
+  const userRole = Cookies.get("role"); 
+  
+  // Ensure only admin can access
+  return token && userRole === "admin" ? children : <Navigate to="/" />;
 }
 
 function App() {
@@ -47,6 +56,15 @@ function App() {
             element={
               <PrivateRoute>
                 <Update />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            exact
+            path="/admin-dashboard"
+            element={
+              <PrivateRoute>
+                <AdminDashboard />
               </PrivateRoute>
             }
           />
