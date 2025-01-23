@@ -6,20 +6,21 @@ import Read from "./components/Read";
 import Home from "./components/Home";
 import Signup from "./components/Signup";
 import Signin from "./components/Signin";
-import AdminDashboard from "./components/AdminDashboard"; 
+import AdminDashboard from "./components/AdminDashboard";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
-function PrivateRoute({ children }) {
+function UserRoute({ children }) {
   const token = Cookies.get("token");
-  return token ? children : <Navigate to="/signin" />;
+  const userRole = Cookies.get("role");
+  
+  return token && userRole === "user" ? children : <Navigate to="/" />;
 }
 
 function AdminRoute({ children }) {
   const token = Cookies.get("token");
-  const userRole = Cookies.get("role"); 
+  const userRole = Cookies.get("role");
   
-  // Ensure only admin can access
   return token && userRole === "admin" ? children : <Navigate to="/" />;
 }
 
@@ -32,40 +33,44 @@ function App() {
           <Route exact path="/signin" element={<Signin />} />
           <Route exact path="/signup" element={<Signup />} />
           <Route exact path="/" element={<Home />} />
+          
           <Route
             exact
             path="/create"
             element={
-              <PrivateRoute>
+              <UserRoute>
                 <Create />
-              </PrivateRoute>
+              </UserRoute>
             }
           />
+          
           <Route
             exact
             path="/noteslist"
             element={
-              <PrivateRoute>
+              <UserRoute>
                 <Read />
-              </PrivateRoute>
+              </UserRoute>
             }
           />
+          
           <Route
             exact
             path="/update/:id"
             element={
-              <PrivateRoute>
+              <UserRoute>
                 <Update />
-              </PrivateRoute>
+              </UserRoute>
             }
           />
+          
           <Route
             exact
             path="/admin-dashboard"
             element={
-              <PrivateRoute>
+              <AdminRoute>
                 <AdminDashboard />
-              </PrivateRoute>
+              </AdminRoute>
             }
           />
         </Routes>

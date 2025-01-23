@@ -31,6 +31,7 @@ export default function Navbar() {
 
   const handleLogout = () => {
     Cookies.remove("token", { path: "/" }); 
+    Cookies.remove("role", { path: "/" });
     navigate("/signin"); 
   };
 

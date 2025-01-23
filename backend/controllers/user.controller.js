@@ -58,7 +58,7 @@ const signin = async (req, res) => {
 
     // Generate token for active user
     const token = generateToken(user._id);
-    res.status(200).json({ message: "Login successful", token });
+    res.status(200).json({ message: "Login successful", token, role: user.role });
   } catch (error) {
     console.error("Error during signin:", error);
     res.status(400).json({ error: error.message });

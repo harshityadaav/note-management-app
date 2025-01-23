@@ -14,6 +14,7 @@ const Signin = () => {
     try {
       const response = await axios.post('http://localhost:5000/api/user/signin', { email, password });
       Cookies.set("token", response.data.token, { expires: 1, path: "/" });
+      Cookies.set("role", response.data.role, { expires: 1, path: "/" });
       navigate('/'); // Redirect to home page
     } catch (err) {
       setError(err.response?.data?.error || 'Signin failed');
