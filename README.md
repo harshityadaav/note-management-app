@@ -40,8 +40,8 @@ Ensure you have the following installed:
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/your-username/note-management-system.git
-   cd note-management-system
+   git clone https://github.com/harshityadaav/notes-management-system.git
+   cd notes-management-system
    ```
 
 2. **Install Dependencies**
@@ -53,7 +53,7 @@ Ensure you have the following installed:
    Create a `.env` file in the root directory:
    ```env
    PORT=5000
-   MONGO_URI=mongodb://localhost:27017/note_management
+   MONGO_URI=mongodb://localhost:27017/notes_management
    JWT_SECRET=your_jwt_secret_key
    ```
 
