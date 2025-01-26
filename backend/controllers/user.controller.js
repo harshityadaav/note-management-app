@@ -13,12 +13,16 @@ const generateToken = (id) => {
  * Sign up a new user
  */
 const signup = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, confirmPassword } = req.body;
 
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ error: "Email already exists" });
+    }
+
+    if(password !== confirmPassword) {
+      return res.status(400).json({ error: "Passwords do not match" });
     }
 
     // Hash password before saving

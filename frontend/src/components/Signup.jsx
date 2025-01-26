@@ -5,14 +5,16 @@ import axios from 'axios';
 const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const response = await axios.post('http://localhost:5000/api/user/signup', { email, password });
-      navigate('/signin'); // Redirect to home page
+      await axios.post('http://localhost:5000/api/user/signup', { email, password, confirmPassword });
+      navigate('/signin'); // Redirect to signin page
     } catch (err) {
       setError(err.response?.data?.error || 'Signup failed');
     }
@@ -56,6 +58,23 @@ const Signup = () => {
             value={password}
             placeholder="Enter your password"
             onChange={(e) => setPassword(e.target.value)}
+            required
+            style={{
+              width: '100%',
+              padding: '8px',
+              marginTop: '5px',
+              borderRadius: '4px',
+              border: '1px solid #ccc',
+            }}
+          />
+        </div>
+        <div style={{ marginBottom: '15px' }}>
+          <label>Confirm Password</label>
+          <input
+            type="password"
+            value={confirmPassword}
+            placeholder="Confirm your password"
+            onChange={(e) => setConfirmPassword(e.target.value)}
             required
             style={{
               width: '100%',
